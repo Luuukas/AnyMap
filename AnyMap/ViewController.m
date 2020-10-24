@@ -23,6 +23,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "IndoorMapViewController.h"
+#import "IndoorModelSet.h"
 
 @interface ViewController ()<BMKLocationManagerDelegate,
                              BMKMapViewDelegate,
@@ -86,10 +87,17 @@
 #pragma mark - into the indoor view
 - (void)intoIndoorMapView:(id)sender {
     NSLog(@"touchdown...");
-    IndoorMapViewController *indoorMapViewController = [[IndoorMapViewController alloc] init];
-    [indoorMapViewController.view setBackgroundColor:UIColor.cyanColor];
     
-    [self presentViewController:indoorMapViewController animated:YES completion:nil];
+    IndoorModelSet *modelSet = [[IndoorModelSet alloc] initWithModelsList:@"models"];
+    BOOL hasModels = [modelSet hasModelsAtLongitude:0 Latitude:0 withRadius:10];
+    if(hasModels){
+        NSDictionary<MSLocation*, SCNSceneSource*>* models = [modelSet modelsForJustAsk];
+        
+        IndoorMapViewController *indoorMapViewController = [[IndoorMapViewController alloc] initWithSceneSource:[[models allValues] objectAtIndex:0]];
+        [indoorMapViewController.view setBackgroundColor:UIColor.cyanColor];
+        
+        [self presentViewController:indoorMapViewController animated:YES completion:nil];
+    }
 }
 
 

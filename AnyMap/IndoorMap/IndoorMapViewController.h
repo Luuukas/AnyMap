@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SceneKit/SceneKit.h>
 #import "MotionDnaManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IndoorMapViewController : UIViewController
 @property (strong, nonatomic) MotionDnaManager *manager;
+-(instancetype)initWithSceneSource:(SCNSceneSource*)sceneSource;
 -(void)receiveMotionDna:(MotionDna*)motionDna;
 -(void)receiveNetworkData:(MotionDna*)motionDna;
 -(void)receiveNetworkData:(NetworkCode)opcode WithPayload:(NSDictionary*)payload;
